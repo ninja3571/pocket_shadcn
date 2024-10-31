@@ -15,6 +15,8 @@ import {
 import { Timer } from 'lucide-react';
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import Delete from "@/components/deleteItem";
+import EditItem from "@/components/editItem";
 
 
 const pb = new PocketBase('http://172.16.15.141:8080');
@@ -77,9 +79,12 @@ export default function Home() {
     setZdjecie(e.target.files[0])
   }
 
-  const handleDelete = async (id) =>{
-    await pb.collection('samochody').delete(id);
-    console.log(id)
+  const deleted = (id)=>{
+    setSamochody((prev)=>(
+      prev.filter((ele)=>{
+        return ele.id != id
+      })
+    ))
   }
 
   return (
@@ -105,12 +110,20 @@ export default function Home() {
             />
           </CardContent>
           <CardFooter>
-            <div className="flex justify-end w-full">
-              <Timer/>
-              <p>Czas parkowania: {samochod.czas_parkowania}</p>
+            <div className="flex w-full justify-center">
+              <div>
+                <Delete id={samochod.id}
+                ondeleted={deleted}/>
+              </div>
+              <div>
+                <EditItem/>
+              </div>
+              <div className="flex justify-end w-full">
+                <Timer/>
+                <p>Czas parkowania: {samochod.czas_parkowania}</p>
+              </div>
             </div>
           </CardFooter>
-          {/* <Button onClick={handleDelete(samochod.id)}>USUN</Button> */}
         </Card>
           
         ))
