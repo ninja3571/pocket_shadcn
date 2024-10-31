@@ -86,6 +86,22 @@ export default function Home() {
       })
     ))
   }
+  
+  const updated = (item)=>{
+    console.log(item)
+
+      var index = null
+      var tmpSamochody = [...samochody]
+      for(let i in samochody){
+        if(samochody[i].id == item.id){
+          index = i
+        }
+      }
+      tmpSamochody[index] == item
+      setSamochody(tmpSamochody)
+      console.log("index: " + index)
+    
+  }
 
   return (
     <div>
@@ -116,7 +132,8 @@ export default function Home() {
                 ondeleted={deleted}/>
               </div>
               <div>
-                <EditItem/>
+                <EditItem item={samochod}
+                onupdated={updated}/>
               </div>
               <div className="flex justify-end w-full">
                 <Timer/>
