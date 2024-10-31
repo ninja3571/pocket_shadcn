@@ -86,7 +86,7 @@ export default function Home() {
       })
     ))
   }
-  
+
   const updated = (item)=>{
     console.log(item)
 
