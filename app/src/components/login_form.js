@@ -11,6 +11,9 @@ import { Button } from "./ui/button"
 import { Label } from "@radix-ui/react-label"
 import { Input } from "./ui/input"
 import { useEffect, useState } from "react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
+import New_user from "./new_user"
 
 import PocketBase from 'pocketbase';
 
@@ -62,39 +65,52 @@ export function Login(onLogin) {
               Make changes to your profile here. Click save when you're done.
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Username
-              </Label>
-              <Input
-                onChange={(e)=>{
-                    handleUser(e)
-                }} 
-                id="name"
-                defaultValue=""
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
-                Password
-              </Label>
-              <Input
-                onChange={(e)=>{
-                    handlePass(e)
-                }} 
-                id="username"
-                type='password'
-                defaultValue=""
-                className="col-span-3"
-              />
-            </div>
-          </div>
-          <DialogFooter className='flex sm:flex-col w-full'>
-            {error && <p className="text-red-600">Nie udało się zalogowac</p>}
-            <Button onClick={handleButton}>Zaloguj</Button>
-          </DialogFooter>
+
+          <Tabs defaultValue="account">
+            <TabsList>
+              <TabsTrigger value="account">Logowanie</TabsTrigger>
+              <TabsTrigger value="newAccount">Rejestracja</TabsTrigger>
+            </TabsList>
+
+              <TabsContent value="account">
+                <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    Username
+                  </Label>
+                  <Input
+                    onChange={(e)=>{
+                        handleUser(e)
+                    }} 
+                    id="name"
+                    defaultValue=""
+                    className="col-span-3"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="username" className="text-right">
+                    Password
+                  </Label>
+                  <Input
+                    onChange={(e)=>{
+                        handlePass(e)
+                    }} 
+                    id="username"
+                    type='password'
+                    defaultValue=""
+                    className="col-span-3"
+                  />
+                </div>
+                {error && <p className="text-red-600">Nie udało się zalogowac</p>}
+                <Button onClick={handleButton}>Zaloguj</Button>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="newAccount">
+                  <New_user setOpen={setOpen}/>
+            </TabsContent>
+          </Tabs>
+
         </DialogContent>
       </Dialog>
     )
